@@ -47,8 +47,8 @@ stripe==14.4.0
 # Email
 resend==2.23.0
 
-# Emergent integrations (if available)
-emergentintegrations==0.1.0
+# Emergent integrations (optional - for Emergent deployment only)
+# emergentintegrations==0.1.0
 
 # Other dependencies
 numpy==2.4.2

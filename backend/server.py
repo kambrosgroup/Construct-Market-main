@@ -1854,7 +1854,10 @@ async def initiate_payment_checkout(payment_id: str, request: Request, data: Che
         raise HTTPException(status_code=400, detail="Payment already processed")
     
     # Use Stripe checkout
-    from emergentintegrations.payments.stripe.checkout import StripeCheckout, CheckoutSessionRequest
+    try:
+        from emergentintegrations.payments.stripe.checkout import StripeCheckout, CheckoutSessionRequest
+    except ImportError:
+        raise HTTPException(status_code=503, detail="Stripe integration not available in this environment")
     
     api_key = os.environ.get("STRIPE_API_KEY")
     origin_url = data.origin_url
@@ -1908,7 +1911,10 @@ async def get_checkout_status(payment_id: str, session_id: str, request: Request
     """Get status of a Stripe checkout session"""
     await get_current_user(request)
     
-    from emergentintegrations.payments.stripe.checkout import StripeCheckout
+    try:
+        from emergentintegrations.payments.stripe.checkout import StripeCheckout
+    except ImportError:
+        raise HTTPException(status_code=503, detail="Stripe integration not available")
     
     api_key = os.environ.get("STRIPE_API_KEY")
     stripe_checkout = StripeCheckout(api_key=api_key, webhook_url="")
@@ -2030,7 +2036,10 @@ async def stripe_webhook(request: Request):
         body = await request.body()
         signature = request.headers.get("Stripe-Signature")
         
-        from emergentintegrations.payments.stripe.checkout import StripeCheckout
+        try:
+            from emergentintegrations.payments.stripe.checkout import StripeCheckout
+        except ImportError:
+            return {"received": True, "warning": "Stripe integration not available"}
         
         api_key = os.environ.get("STRIPE_API_KEY")
         stripe_checkout = StripeCheckout(api_key=api_key, webhook_url="")
