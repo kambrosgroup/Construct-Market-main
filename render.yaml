@@ -10,7 +10,7 @@ services:
       - key: PYTHON_VERSION
         value: 3.11.0
       - key: MONGO_URL
-        value: mongodb+srv://kambros098_db_user:jr8CqzdzrZnm6znA@cluster0.vp0ienm.mongodb.net/constructmarket?retryWrites=true&w=majority
+        value: mongodb+srv://kambros098_db_user:jr8CqzdzrZnm6znA@cluster0.vp0ienm.mongodb.net/constructmarket?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=false
       - key: DB_NAME
         value: constructmarket
       - key: JWT_SECRET_KEY
