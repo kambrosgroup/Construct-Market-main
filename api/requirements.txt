@@ -51,5 +51,5 @@ resend==2.23.0
 # emergentintegrations==0.1.0
 
 # Other dependencies
-numpy==2.4.2
+numpy==2.4.3
 pandas==3.0.1
