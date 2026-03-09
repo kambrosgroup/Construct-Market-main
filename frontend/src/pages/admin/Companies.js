@@ -15,8 +15,8 @@ export default function AdminCompanies() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
-    company_type: '',
-    is_verified: '',
+    company_type: 'all',
+    is_verified: 'all',
     search: ''
   });
 
@@ -30,8 +30,8 @@ export default function AdminCompanies() {
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       
       const params = new URLSearchParams();
-      if (filters.company_type) params.append('company_type', filters.company_type);
-      if (filters.is_verified !== '') params.append('is_verified', filters.is_verified);
+      if (filters.company_type && filters.company_type !== 'all') params.append('company_type', filters.company_type);
+      if (filters.is_verified && filters.is_verified !== 'all') params.append('is_verified', filters.is_verified);
       
       const response = await axios.get(`${API}/admin/companies?${params.toString()}`, { withCredentials: true, headers });
       setCompanies(response.data.companies);
@@ -102,7 +102,7 @@ export default function AdminCompanies() {
               <SelectValue placeholder="All Types" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Types</SelectItem>
+              <SelectItem value="all">All Types</SelectItem>
               <SelectItem value="builder">Builder</SelectItem>
               <SelectItem value="provider">Provider</SelectItem>
               <SelectItem value="supplier">Supplier</SelectItem>
@@ -113,7 +113,7 @@ export default function AdminCompanies() {
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Status</SelectItem>
+              <SelectItem value="all">All Status</SelectItem>
               <SelectItem value="true">Verified</SelectItem>
               <SelectItem value="false">Unverified</SelectItem>
             </SelectContent>

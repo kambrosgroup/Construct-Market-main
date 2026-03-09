@@ -15,8 +15,8 @@ export default function AdminUsers() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
-    role: '',
-    is_active: '',
+    role: 'all',
+    is_active: 'all',
     search: ''
   });
 
@@ -30,8 +30,8 @@ export default function AdminUsers() {
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       
       const params = new URLSearchParams();
-      if (filters.role) params.append('role', filters.role);
-      if (filters.is_active !== '') params.append('is_active', filters.is_active);
+      if (filters.role && filters.role !== 'all') params.append('role', filters.role);
+      if (filters.is_active && filters.is_active !== 'all') params.append('is_active', filters.is_active);
       
       const response = await axios.get(`${API}/admin/users?${params.toString()}`, { withCredentials: true, headers });
       setUsers(response.data.users);
@@ -103,7 +103,7 @@ export default function AdminUsers() {
               <SelectValue placeholder="All Roles" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Roles</SelectItem>
+              <SelectItem value="all">All Roles</SelectItem>
               <SelectItem value="builder">Builder</SelectItem>
               <SelectItem value="provider">Provider</SelectItem>
               <SelectItem value="admin">Admin</SelectItem>
@@ -114,7 +114,7 @@ export default function AdminUsers() {
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Status</SelectItem>
+              <SelectItem value="all">All Status</SelectItem>
               <SelectItem value="true">Active</SelectItem>
               <SelectItem value="false">Inactive</SelectItem>
             </SelectContent>
