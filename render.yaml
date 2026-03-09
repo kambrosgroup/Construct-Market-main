@@ -1,0 +1,51 @@
+services:
+  # Backend FastAPI service
+  - type: web
+    name: constructmarket-api
+    runtime: python
+    plan: free
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn server:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: MONGO_URL
+        sync: false  # Set manually in Render dashboard
+      - key: DB_NAME
+        value: constructmarket
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: https://constructmarket-web.onrender.com,https://constructmarket.onrender.com
+      - key: STRIPE_API_KEY
+        sync: false  # Set manually in Render dashboard
+      - key: RESEND_API_KEY
+        sync: false  # Set manually in Render dashboard
+
+  # Frontend React site (served via web service with static publish)
+  - type: web
+    name: constructmarket-web
+    runtime: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/build
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
+      - key: REACT_APP_BACKEND_URL
+        value: https://constructmarket-api.onrender.com
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://constructmarket-api.onrender.com/api/$1
+      - type: rewrite
+        source: /auth/*
+        destination: https://constructmarket-api.onrender.com/auth/$1
+      - type: rewrite
+        source: /docs
+        destination: https://constructmarket-api.onrender.com/docs
+      - type: rewrite
+        source: /openapi.json
+        destination: https://constructmarket-api.onrender.com/openapi.json
+      - type: rewrite
+        source: /*
+        destination: /index.html
