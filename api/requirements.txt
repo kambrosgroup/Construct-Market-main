@@ -4,7 +4,7 @@
 # Web framework
 fastapi==0.110.1
 starlette==0.37.2
-uvicorn==0.25.0
+uvicorn==0.41.0
 
 # Serverless adapter
 mangum==0.17.0
