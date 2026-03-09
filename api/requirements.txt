@@ -42,7 +42,7 @@ qrcode==8.2
 pillow==12.1.1
 
 # Stripe payments
-stripe==14.4.0
+stripe==14.4.1
 
 # Email
 resend==2.23.0
