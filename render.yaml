@@ -16,7 +16,7 @@ services:
       - key: JWT_SECRET_KEY
         generateValue: true
       - key: CORS_ORIGINS
-        value: https://constructmarket-web.onrender.com,https://constructmarket.onrender.com
+        value: https://constructmarket-web.onrender.com,https://constructmarket.onrender.com,https://www.construct.trade,https://construct.trade
       - key: STRIPE_API_KEY
         sync: false  # Set manually in Render dashboard
       - key: RESEND_API_KEY
