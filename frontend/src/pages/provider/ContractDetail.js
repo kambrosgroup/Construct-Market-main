@@ -110,8 +110,8 @@ export default function ProviderContractDetail() {
           )}
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-          <div className="xl:col-span-8">
+        <div className="flex flex-col 2xl:flex-row gap-6">
+          <div className="flex-1 min-w-0">
             <Card className="border">
               <CardHeader>
                 <CardTitle className="font-heading text-lg">Contract Document</CardTitle>
@@ -119,8 +119,8 @@ export default function ProviderContractDetail() {
               <CardContent>
                 {contract.html_body ? (
                   <div 
-                    className="prose max-w-full w-full border p-6 rounded-sm bg-white overflow-x-auto"
-                    style={{ minHeight: '400px' }}
+                    className="prose max-w-none w-full border p-6 rounded-sm bg-white overflow-x-auto"
+                    style={{ minHeight: '500px' }}
                     dangerouslySetInnerHTML={{ __html: contract.html_body }}
                   />
                 ) : (
@@ -130,7 +130,7 @@ export default function ProviderContractDetail() {
             </Card>
           </div>
 
-          <div className="xl:col-span-4 space-y-4">
+          <div className="w-full 2xl:w-80 flex-shrink-0 space-y-4">
             <Card className="border">
               <CardHeader>
                 <CardTitle className="font-heading text-lg">Contract Value</CardTitle>
